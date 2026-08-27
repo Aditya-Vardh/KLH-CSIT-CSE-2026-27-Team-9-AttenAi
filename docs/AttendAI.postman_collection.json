@@ -1,0 +1,198 @@
+{
+  "info": {
+    "name": "AttendAI API",
+    "description": "Complete API collection for AttendAI microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8080" },
+    { "key": "token",    "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@attendai.com\",\n  \"password\": \"Admin@1234\",\n  \"firstName\": \"Admin\",\n  \"lastName\": \"User\",\n  \"role\": \"ADMIN\"\n}" }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": ["const r = pm.response.json();", "pm.collectionVariables.set('token', r.accessToken);"] } }],
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@attendai.com\",\n  \"password\": \"Admin@1234\"\n}" }
+          }
+        },
+        {
+          "name": "Validate Token",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/auth/validate",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "List Employees",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/employees?page=0&size=10", "query": [{"key":"page","value":"0"},{"key":"size","value":"10"}] },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/employees",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeCode\": \"EMP-001\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@attendai.com\",\n  \"joiningDate\": \"2026-01-01\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Check In",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/attendance/check-in",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1\n}" }
+          }
+        },
+        {
+          "name": "Check Out",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/attendance/check-out",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1\n}" }
+          }
+        },
+        {
+          "name": "Monthly Summary",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/attendance/monthly/1?year=2026&month=8" },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave",
+      "item": [
+        {
+          "name": "Submit Leave Request",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/leave/requests",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1,\n  \"leaveTypeId\": 1,\n  \"startDate\": \"2026-08-15\",\n  \"endDate\": \"2026-08-16\",\n  \"reason\": \"Family vacation\"\n}" }
+          }
+        },
+        {
+          "name": "Get Leave Balance",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/leave/balance/1",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Approve Leave",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/api/leave/requests/1/approve",
+            "header": [
+              { "key": "Authorization",    "value": "Bearer {{token}}" },
+              { "key": "Content-Type",     "value": "application/json" },
+              { "key": "X-Auth-User-Id",   "value": "1" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"comment\": \"Approved\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Agent",
+      "item": [
+        {
+          "name": "NL Attendance",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/ai/attendance/nl",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1,\n  \"message\": \"I will be 30 minutes late today due to traffic\"\n}" }
+          }
+        },
+        {
+          "name": "Leave Recommendation",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/ai/leave/recommend",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1,\n  \"leaveTypeId\": 1,\n  \"startDate\": \"2026-08-20\",\n  \"endDate\": \"2026-08-22\"\n}" }
+          }
+        },
+        {
+          "name": "HR Chatbot",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/ai/chat",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": 1,\n  \"message\": \"How many leave days do I have remaining?\"\n}" }
+          }
+        },
+        {
+          "name": "Analytics Query",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/ai/analytics/query",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"question\": \"Who has poor attendance this month?\",\n  \"employeeIds\": [1, 2, 3],\n  \"fromDate\": \"2026-08-01\"\n}" }
+          }
+        }
+      ]
+    }
+  ]
+}

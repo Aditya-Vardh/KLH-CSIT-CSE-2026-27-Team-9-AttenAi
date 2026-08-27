@@ -1,0 +1,16 @@
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\config\GatewayJwtAuthFilter.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\config\OpenApiConfig.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\config\SecurityConfig.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\controller\NotificationController.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\dto\NotificationRequest.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\dto\NotificationResponse.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\dto\PagedResponse.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\entity\NotificationLog.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\entity\NotificationStatus.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\entity\NotificationType.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\exception\ApiError.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\exception\GlobalExceptionHandler.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\NotificationServiceApplication.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\repository\NotificationLogRepository.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\service\EmailService.java
+D:\Projects\Soa_pro\backend\notification-service\src\main\java\com\attendai\notification\service\NotificationService.java

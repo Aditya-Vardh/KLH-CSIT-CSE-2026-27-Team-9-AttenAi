@@ -1,0 +1,4 @@
+D:\Projects\Soa_pro\backend\api-gateway\src\main\java\com\attendai\gateway\ApiGatewayApplication.java
+D:\Projects\Soa_pro\backend\api-gateway\src\main\java\com\attendai\gateway\config\CorsGlobalConfig.java
+D:\Projects\Soa_pro\backend\api-gateway\src\main\java\com\attendai\gateway\filter\JwtAuthenticationFilter.java
+D:\Projects\Soa_pro\backend\api-gateway\src\main\java\com\attendai\gateway\security\JwtUtil.java

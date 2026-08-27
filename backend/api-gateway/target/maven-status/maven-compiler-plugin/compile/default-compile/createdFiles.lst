@@ -1,0 +1,4 @@
+com\attendai\gateway\config\CorsGlobalConfig.class
+com\attendai\gateway\filter\JwtAuthenticationFilter.class
+com\attendai\gateway\security\JwtUtil.class
+com\attendai\gateway\ApiGatewayApplication.class

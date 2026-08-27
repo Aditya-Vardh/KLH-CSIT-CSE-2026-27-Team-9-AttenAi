@@ -179,6 +179,13 @@ All requests route through the gateway at `http://localhost:8080`.
 | GET    | `/api/leave/balance/{empId}`       | Leave balance            |
 | GET    | `/api/leave/types`                 | Leave type catalogue     |
 
+### Audit Logs
+
+| Method | Endpoint               | Description                         |
+|--------|------------------------|-------------------------------------|
+| GET    | `/api/audit`           | Paginated audit log (Admin only)    |
+| POST   | `/api/audit`           | Record event (internal/service use) |
+
 ### AI Agent
 
 | Method | Endpoint                        | Description                       |
@@ -196,7 +203,38 @@ All requests route through the gateway at `http://localhost:8080`.
 - JWT (HS512, jjwt 0.12.5) issued by auth-service
 - API Gateway validates every token before forwarding
 - Downstream services trust `X-Auth-User-Email`, `X-Auth-User-Id`, `X-Auth-User-Role` headers
-- Roles: `ADMIN`, `HR`, `EMPLOYEE`
+- Roles: `ADMIN`, `HR`, `MANAGER`, `EMPLOYEE`
+- Authorization is enforced **server-side** on every mutating endpoint (e.g. only `ADMIN`/`HR`/`MANAGER` can approve/reject leave — a `403 Forbidden` is returned for any other role regardless of frontend state)
+- Audit events are written for all important employee/department/leave actions and are viewable by `ADMIN` only via `/api/audit`
+
+---
+
+## Seed Data
+
+A demo seed script is provided at `seed/seed_demo_data.sql`.
+
+It inserts:
+
+| Entity | Data |
+|---|---|
+| Departments | Engineering, Human Resources, Finance, Operations |
+| Designations | Junior Developer, Senior Developer, HR Manager, Department Head, Analyst |
+| Leave types | Annual, Sick, Casual, Maternity/Paternity, Unpaid |
+| Users | admin@attendai.com (ADMIN), hr@attendai.com (HR), manager@attendai.com (MANAGER), emp1–3@attendai.com (EMPLOYEE) |
+| Employees | Linked to the above users |
+
+**All demo passwords are:** `Password@123`
+
+Run after creating the databases:
+
+```bash
+# Apply to each relevant database
+mysql -u root -p auth_db       < seed/seed_demo_data.sql
+mysql -u root -p employee_db   < seed/seed_demo_data.sql
+mysql -u root -p leave_db      < seed/seed_demo_data.sql
+```
+
+> The seed script is safe to skip — the application creates its own schema via Hibernate `ddl-auto: update` and works with any data you add through the UI.
 
 ---
 
