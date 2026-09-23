@@ -1,0 +1,13 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build outputs
+**/target/
+frontend/dist/
+
+# Local IDE files
+.idea/
+.vscode/
+*.iml
